@@ -169,8 +169,8 @@ namespace DDDWebAPI.Presentation.Controllers
         {
             if (model == null)
                 return BadRequest();
-
-            if ( _applicationServiceCategoria.GetAll().Where(o=> o.id == model.id).First() == null)
+            CategoriaDTO categoria = _applicationServiceCategoria.GetAll().Where(o => o.id == model.id).First();
+            if ( categoria == null)
             {
                 _logger.LogInformation("CategoriaDTO não existe, por isto não foi alterada.");
 
