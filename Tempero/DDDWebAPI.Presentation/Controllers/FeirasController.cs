@@ -42,32 +42,8 @@ namespace DDDWebAPI.Presentation.Controllers
         /// <summary>
         /// Insere uma nova feira
         /// </summary>
-        /// <remarks>
-        /// Sample request:
-        /// 
-        ///     PUT feira/
-        ///     {
-        ///       "registro": "4044-3",
-        ///       "id": "1234",
-        ///       "longitude": "-12312312",
-        ///       "latitude": "-12312312",
-        ///       "setcens": "gabryur",
-        ///       "areap": "jd umarizal",
-        ///       "coddist": "1234",
-        ///       "distrito": "São Paulo",
-        ///       "codsubpref": "43312",
-        ///       "subprefe": "Campo limpo",
-        ///       "regiao5": "12334",
-        ///       "regiao8": "123345",
-        ///       "nome_feira": "Campo Limpo",
-        ///       "logradouro": "Fundo",
-        ///       "numero": "43211",
-        ///       "bairro": "Jd Umarizal",
-        ///       "referencia": "Poste cinza"
-        ///     }
         /// <param name="model">FeiraDTO a ser inserida</param>
         /// <returns>Se a feira foi criada ou não</returns>
-        /// <remarks>ue</remarks>
         /// <response code="200">Feira criada</response>
         /// <response code="400">feira nao enviada no body</response>
         /// <response code="422">feira enviada com problemas, veja a mensagem de erro</response>
@@ -148,30 +124,6 @@ namespace DDDWebAPI.Presentation.Controllers
         /// <summary>
         /// Atualiza uma feira pelo codigo de registro
         /// </summary>
-        /// <remarks>
-        /// Sample request:
-        /// 
-        ///     PATCH feira/
-        ///     {
-        ///       "registro": "4044-3",
-        ///       "id": "1233123",
-        ///       "longitude": "-12312399",
-        ///       "latitude": "-12312399",
-        ///       "setcens": "cadacal",
-        ///       "areap": "vila santa rosa",
-        ///       "coddist": "123",
-        ///       "distrito": "Mococa",
-        ///       "codsubpref": "pref",
-        ///       "subprefe": "taboao",
-        ///       "regiao5": "1233",
-        ///       "regiao8": "12334",
-        ///       "nome_feira": "Santa Rosa",
-        ///       "logradouro": "Fundo",
-        ///       "numero": "432",
-        ///       "bairro": "Santa rosa",
-        ///       "referencia": "Casa azul"
-        ///     }
-        /// </remarks>
         /// <param name="model">feira que será atualizada</param>
         /// <returns>As feiras que foram encontradas com aquele nome </returns>
         /// <response code="200">Retorna que a feira foi alterada</response>

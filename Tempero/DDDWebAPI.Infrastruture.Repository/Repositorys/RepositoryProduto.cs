@@ -24,9 +24,7 @@ namespace DDDWebAPI.Infrastruture.Repository.Repositorys
             Produto entity = GetById(produto.id);
             entity.id = produto.id;
             entity.nome = produto.nome;
-            entity.gramas = produto.gramas;
-            entity.categoria = produto.categoria;
-            entity.valor = produto.valor;
+            entity.categoriaid = produto.categoriaid;
             base.Update(entity);
         }
     }

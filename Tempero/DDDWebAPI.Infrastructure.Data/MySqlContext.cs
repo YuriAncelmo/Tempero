@@ -16,8 +16,9 @@ namespace DDDWebAPI.Infrastructure.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Produto>()
-                        .HasOne(c => c.categoria)
-                        .WithMany(p => p.produtos);
+                        .HasOne<Categoria>()
+                        .WithMany(p => p.produtos)
+                        .HasForeignKey(c=> c.categoriaid);
         }
         #region Construtores
         public MySqlContext(DbContextOptions<MySqlContext> options) : base(options)
@@ -26,7 +27,7 @@ namespace DDDWebAPI.Infrastructure.Data
             try
             {
                 var databaseCreator = (Database.GetService<IDatabaseCreator>() as RelationalDatabaseCreator);
-                if (databaseCreator.Exists())
+                if (!databaseCreator.Exists())
                     databaseCreator.EnsureCreated();
                 databaseCreator.CreateTables();
             }

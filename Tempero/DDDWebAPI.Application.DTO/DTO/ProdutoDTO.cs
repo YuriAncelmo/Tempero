@@ -6,11 +6,9 @@ namespace DDDWebAPI.Application.DTO.DTO
     public class ProdutoDTO : BaseDTO
     {
         #region Propriedades 
-        public string nome { get; set; }
-        public double valor { get; set; }
-        public int gramas { get; set; }
-
-        public CategoriaDTO categoria { get; set; }
+        [Required(ErrorMessage ="É necessário um nome para o produto.")]
+        public string? nome { get; set; }
+        public int categoriaid { get; set; }
         #endregion
 
     }

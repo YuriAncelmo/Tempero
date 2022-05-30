@@ -1,7 +1,6 @@
 ﻿using DDDWebAPI.Domain.Core.Interfaces.Repositorys;
 using DDDWebAPI.Domain.Models;
 using DDDWebAPI.Infrastructure.Data;
-using System.Reflection;
 
 namespace DDDWebAPI.Infrastruture.Repository.Repositorys
 {

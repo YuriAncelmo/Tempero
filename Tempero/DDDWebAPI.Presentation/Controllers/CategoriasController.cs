@@ -2,8 +2,6 @@
 using DDDWebAPI.Application.Interfaces;
 using DDDWebAPI.Application.DTO.DTO;
 using Microsoft.AspNetCore.Diagnostics;
-using DDDWebAPI.Domain.Models;
-using Newtonsoft.Json;
 
 namespace DDDWebAPI.Presentation.Controllers
 {
@@ -17,40 +15,14 @@ namespace DDDWebAPI.Presentation.Controllers
         {
             _applicationServiceCategoria = ApplicationServiceCategoria;
             _logger = logger;
-
-
         }
 
         #region Inserir
         /// <summary>
         /// Insere uma nova categoria
         /// </summary>
-        /// <remarks>
-        /// Sample request:
-        /// 
-        ///     PUT categoria/
-        ///     {
-        ///       "id": "4044-3",
-        ///       "id": "1234",
-        ///       "longitude": "-12312312",
-        ///       "latitude": "-12312312",
-        ///       "setcens": "gabryur",
-        ///       "areap": "jd umarizal",
-        ///       "coddist": "1234",
-        ///       "distrito": "São Paulo",
-        ///       "codsubpref": "43312",
-        ///       "subprefe": "Campo limpo",
-        ///       "regiao5": "12334",
-        ///       "regiao8": "123345",
-        ///       "nome_categoria": "Campo Limpo",
-        ///       "logradouro": "Fundo",
-        ///       "numero": "43211",
-        ///       "bairro": "Jd Umarizal",
-        ///       "referencia": "Poste cinza"
-        ///     }
         /// <param name="model">CategoriaDTO a ser inserida</param>
         /// <returns>Se a categoria foi criada ou não</returns>
-        /// <remarks>ue</remarks>
         /// <response code="200">Categoria criada</response>
         /// <response code="400">categoria nao enviada no body</response>
         /// <response code="422">categoria enviada com problemas, veja a mensagem de erro</response>
@@ -65,23 +37,15 @@ namespace DDDWebAPI.Presentation.Controllers
         public ActionResult<CategoriaDTO> Post([FromBody] CategoriaDTO model)
         {
             _logger.LogInformation("Validando se a entidade já existe");
-            
+
             if (model == null)
                 return BadRequest("Categoria inválida");
             if (model.nome == null)
                 return UnprocessableEntity("É necessário ter um id para cadastrar");
 
-            //if (_applicationServiceCategoria.GetByRegistro(model.id) != null)
-            //{
-            //    _logger.LogInformation("A categoria com código de id {0} já existe", model.id);
-            //    return UnprocessableEntity("Esta categoria já existe");
-            //}
-            //else
-            //{
             _logger.LogInformation("Tentando incluir uma categoria", model);
-                _applicationServiceCategoria.Add(model);
-                return Ok(model);
-            //}
+            _applicationServiceCategoria.Add(model);
+            return Ok(model);
         }
         #endregion 
 
@@ -102,7 +66,7 @@ namespace DDDWebAPI.Presentation.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ActionResult<IEnumerable<CategoriaDTO>> GetNomeCategoria([FromRoute] string nome_categoria)
+        public ActionResult<IEnumerable<CategoriaDTO>> GetCategoriaByNome([FromRoute] string nome_categoria)
         {
             if (nome_categoria == null || nome_categoria == "")
                 return BadRequest("Informe um nome de categoria");
@@ -123,6 +87,44 @@ namespace DDDWebAPI.Presentation.Controllers
             {
                 _logger.LogInformation("Categorias retornadas " + categorias_por_nome.Count());
                 return Ok(categorias_por_nome);
+            }
+        }/// <summary>
+         /// Busca uma categoria pelo nome 
+         /// </summary>
+         /// <param name="id_categoria">id da categoria que será utilizado para a busca</param>
+         /// <returns>As categorias que foram encontradas com aquele nome </returns>
+         /// <response code="200">Retorna as categorias encontradas</response>
+         /// <response code="204">Nenhuma categoria foi encontrada</response>
+         /// <response code="400">Requisição mal formada,verifique a mensagem de erro</response>
+         /// <response code="500">Erro interno</response>
+        [HttpGet]
+        [Route("id/{id_categoria}")]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public ActionResult<CategoriaDTO> GetCategoriaById([FromRoute] int id_categoria)
+        {
+            if (id_categoria == null || id_categoria == 0)
+                return BadRequest("Informe um id de categoria");
+
+            CategoriaDTO categoria;
+            _logger.LogInformation("Tentando buscar uma categoria pelo id " + id_categoria);
+
+            categoria = _applicationServiceCategoria.GetById(id_categoria);
+
+
+            if (categoria == null)
+            {
+                _logger.LogInformation("Nada encontrado");
+
+                return NoContent();
+            }
+            else
+            {
+                _logger.LogInformation("Categoria retornada: " + categoria.nome);
+                return Ok(categoria);
             }
         }
         #endregion
@@ -170,7 +172,7 @@ namespace DDDWebAPI.Presentation.Controllers
             if (model == null)
                 return BadRequest();
             CategoriaDTO categoria = _applicationServiceCategoria.GetAll().Where(o => o.id == model.id).First();
-            if ( categoria == null)
+            if (categoria == null)
             {
                 _logger.LogInformation("CategoriaDTO não existe, por isto não foi alterada.");
 
@@ -180,7 +182,7 @@ namespace DDDWebAPI.Presentation.Controllers
             _logger.LogInformation("Tentando alterar a categoria com código de id " + model.id);
 
             _applicationServiceCategoria.Update(model);
-            
+
             _logger.LogInformation("CategoriaDTO com código de id " + model.id + " alterada.");
             return Ok(model);
         }
@@ -205,11 +207,11 @@ namespace DDDWebAPI.Presentation.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult Delete([FromRoute] int id)
         {
-            if (id == null )
+            if (id == null)
                 return BadRequest();
 
             _logger.LogInformation("Tentando deletar a categoria com código de id " + id);
-            CategoriaDTO obj = _applicationServiceCategoria.GetAll().Where(o=>o.id == id).First();
+            CategoriaDTO obj = _applicationServiceCategoria.GetAll().Where(o => o.id == id).First();
             if (obj != null)
             {
                 _logger.LogInformation("A categoria existe");

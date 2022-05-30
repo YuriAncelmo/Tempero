@@ -4,12 +4,33 @@
         <name>DDDWebAPI.Presentation</name>
     </assembly>
     <members>
-        <!-- Badly formed XML comment ignored for member "M:DDDWebAPI.Presentation.Controllers.CategoriasController.Post(DDDWebAPI.Application.DTO.DTO.CategoriaDTO)" -->
-        <member name="M:DDDWebAPI.Presentation.Controllers.CategoriasController.GetNomeCategoria(System.String)">
+        <member name="M:DDDWebAPI.Presentation.Controllers.CategoriasController.Post(DDDWebAPI.Application.DTO.DTO.CategoriaDTO)">
+            <summary>
+            Insere uma nova categoria
+            </summary>
+            <param name="model">CategoriaDTO a ser inserida</param>
+            <returns>Se a categoria foi criada ou não</returns>
+            <response code="200">Categoria criada</response>
+            <response code="400">categoria nao enviada no body</response>
+            <response code="422">categoria enviada com problemas, veja a mensagem de erro</response>
+            <response code="500">erro desconhecido</response>
+        </member>
+        <member name="M:DDDWebAPI.Presentation.Controllers.CategoriasController.GetCategoriaByNome(System.String)">
             <summary>
             Busca uma categoria pelo nome 
             </summary>
             <param name="nome_categoria">Nome da categoria que será utilizado para a busca</param>
+            <returns>As categorias que foram encontradas com aquele nome </returns>
+            <response code="200">Retorna as categorias encontradas</response>
+            <response code="204">Nenhuma categoria foi encontrada</response>
+            <response code="400">Requisição mal formada,verifique a mensagem de erro</response>
+            <response code="500">Erro interno</response>
+        </member>
+        <member name="M:DDDWebAPI.Presentation.Controllers.CategoriasController.GetCategoriaById(System.Int32)">
+            <summary>
+            Busca uma categoria pelo nome 
+            </summary>
+            <param name="id_categoria">id da categoria que será utilizado para a busca</param>
             <returns>As categorias que foram encontradas com aquele nome </returns>
             <response code="200">Retorna as categorias encontradas</response>
             <response code="204">Nenhuma categoria foi encontrada</response>
@@ -62,7 +83,17 @@
             <response code="400">Requisição mal formada</response>
             <response code="500">Erro interno</response>
         </member>
-        <!-- Badly formed XML comment ignored for member "M:DDDWebAPI.Presentation.Controllers.FeirasController.Post(DDDWebAPI.Application.DTO.DTO.FeiraDTO)" -->
+        <member name="M:DDDWebAPI.Presentation.Controllers.FeirasController.Post(DDDWebAPI.Application.DTO.DTO.FeiraDTO)">
+            <summary>
+            Insere uma nova feira
+            </summary>
+            <param name="model">FeiraDTO a ser inserida</param>
+            <returns>Se a feira foi criada ou não</returns>
+            <response code="200">Feira criada</response>
+            <response code="400">feira nao enviada no body</response>
+            <response code="422">feira enviada com problemas, veja a mensagem de erro</response>
+            <response code="500">erro desconhecido</response>
+        </member>
         <member name="M:DDDWebAPI.Presentation.Controllers.FeirasController.GetNomeFeira(System.String)">
             <summary>
             Busca uma feira pelo nome 
@@ -78,30 +109,6 @@
             <summary>
             Atualiza uma feira pelo codigo de registro
             </summary>
-            <remarks>
-            Sample request:
-            
-                PATCH feira/
-                {
-                  "registro": "4044-3",
-                  "id": "1233123",
-                  "longitude": "-12312399",
-                  "latitude": "-12312399",
-                  "setcens": "cadacal",
-                  "areap": "vila santa rosa",
-                  "coddist": "123",
-                  "distrito": "Mococa",
-                  "codsubpref": "pref",
-                  "subprefe": "taboao",
-                  "regiao5": "1233",
-                  "regiao8": "12334",
-                  "nome_feira": "Santa Rosa",
-                  "logradouro": "Fundo",
-                  "numero": "432",
-                  "bairro": "Santa rosa",
-                  "referencia": "Casa azul"
-                }
-            </remarks>
             <param name="model">feira que será atualizada</param>
             <returns>As feiras que foram encontradas com aquele nome </returns>
             <response code="200">Retorna que a feira foi alterada</response>
@@ -117,6 +124,61 @@
             <returns>Se foi deletado</returns>
             <response code="202">Ok</response>
             <response code="204">Nenhuma feira foi encontrada</response>
+            <response code="400">Requisição mal formada</response>
+            <response code="500">Erro interno</response>
+        </member>
+        <member name="M:DDDWebAPI.Presentation.Controllers.ProdutosController.Post(DDDWebAPI.Application.DTO.DTO.ProdutoDTO)">
+            <summary>
+            Insere uma nova produto
+            </summary>
+            <param name="model">ProdutoDTO a ser inserido</param>
+            <returns>Se a produto foi criado ou não</returns>
+            <response code="200">Produto criado</response>
+            <response code="400">produto nao enviado no body</response>
+            <response code="422">produto enviado com problemas, veja a mensagem de erro</response>
+            <response code="500">erro desconhecido</response>
+        </member>
+        <member name="M:DDDWebAPI.Presentation.Controllers.ProdutosController.GetProdutoByNome(System.String)">
+            <summary>
+            Busca uma produto pelo nome 
+            </summary>
+            <param name="nome_produto">Nome do produto que será utilizado para a busca</param>
+            <returns>Os produtos que foram encontrados com aquele nome </returns>
+            <response code="200">Retorna os produtos encontrados</response>
+            <response code="204">Nenhuma produto foi encontrado</response>
+            <response code="400">Requisição mal formada,verifique a mensagem de erro</response>
+            <response code="500">Erro interno</response>
+        </member>
+        <member name="M:DDDWebAPI.Presentation.Controllers.ProdutosController.GetProdutoById(System.Int32)">
+            <summary>
+            Busca uma produto pelo nome 
+            </summary>
+            <param name="id_produto">id do produto que será utilizado para a busca</param>
+            <returns>Os produtos que foram encontrados com aquele nome </returns>
+            <response code="200">Retorna os produtos encontrados</response>
+            <response code="204">Nenhuma produto foi encontrado</response>
+            <response code="400">Requisição mal formado,verifique a mensagem de erro</response>
+            <response code="500">Erro interno</response>
+        </member>
+        <member name="M:DDDWebAPI.Presentation.Controllers.ProdutosController.Patch(DDDWebAPI.Application.DTO.DTO.ProdutoDTO)">
+            <summary>
+            Atualiza uma produto pelo codigo de id
+            </summary>
+            <param name="model">produto que será atualizada</param>
+            <returns>Os produtos que foram encontrados com aquele nome </returns>
+            <response code="200">Retorna que a produto foi alterada</response>
+            <response code="400">Requisição mal formada</response>
+            <response code="404">Nenhuma produto foi encontrada</response>
+            <response code="500">Erro interno</response>
+        </member>
+        <member name="M:DDDWebAPI.Presentation.Controllers.ProdutosController.Delete(System.Int32)">
+            <summary>
+            Remove uma produto pelo codigo de id
+            </summary>
+            <param name="id">código de id da produto que será removida</param>
+            <returns>Se foi deletado</returns>
+            <response code="202">Ok</response>
+            <response code="204">Nenhuma produto foi encontrada</response>
             <response code="400">Requisição mal formada</response>
             <response code="500">Erro interno</response>
         </member>
