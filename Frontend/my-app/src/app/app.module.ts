@@ -8,11 +8,13 @@ import { CategoriasComponent } from './categorias/categorias.component';
 import { DetalheCategoriaComponent } from './categorias/detalhe-categoria/detalhe-categoria.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { MessagesComponent } from './messages/messages.component';
 @NgModule({
   declarations: [
     AppComponent,
     CategoriasComponent,
-    DetalheCategoriaComponent
+    DetalheCategoriaComponent,
+    MessagesComponent
   ],
   imports: [
     BrowserModule,
