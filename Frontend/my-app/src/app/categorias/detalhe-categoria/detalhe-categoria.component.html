@@ -1,0 +1,8 @@
+<div *ngIf="categoria">
+    <h2>Detalhes da categoria: {{categoria.nome | uppercase}}</h2>
+    <div>id: {{categoria.id}}</div>
+    <div>
+        <label for="Categoria-nome">Nome da categoria: </label>
+        <input id="Categoria-nome" [(ngModel)]="categoria.nome" placeholder="nome">
+    </div>
+</div>
