@@ -19,8 +19,8 @@ namespace DDDWebAPI.Presentation.Controllers
             _logger = logger;
 
             //Init database
-            if (_applicationServiceFeira.GetAll().Count() == 0)
-                PopulateTable();
+            //if (_applicationServiceFeira.GetAll().Count() == 0)
+            //    PopulateTable();
 
         }
 

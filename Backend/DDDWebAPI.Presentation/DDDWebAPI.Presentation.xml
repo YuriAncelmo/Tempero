@@ -15,6 +15,16 @@
             <response code="422">categoria enviada com problemas, veja a mensagem de erro</response>
             <response code="500">erro desconhecido</response>
         </member>
+        <member name="M:DDDWebAPI.Presentation.Controllers.CategoriasController.GetCategorias">
+            <summary>
+            Busca todas as categorias
+            </summary>
+            <returns>As categorias encontradas </returns>
+            <response code="200">Retorna as categorias encontradas</response>
+            <response code="204">Nenhuma categoria foi encontrada</response>
+            <response code="400">Requisição mal formada,verifique a mensagem de erro</response>
+            <response code="500">Erro interno</response>
+        </member>
         <member name="M:DDDWebAPI.Presentation.Controllers.CategoriasController.GetCategoriaByNome(System.String)">
             <summary>
             Busca uma categoria pelo nome 
@@ -129,7 +139,7 @@
         </member>
         <member name="M:DDDWebAPI.Presentation.Controllers.ProdutosController.Post(DDDWebAPI.Application.DTO.DTO.ProdutoDTO)">
             <summary>
-            Insere uma nova produto
+            Insere um nova produto
             </summary>
             <param name="model">ProdutoDTO a ser inserido</param>
             <returns>Se a produto foi criado ou não</returns>
@@ -140,45 +150,45 @@
         </member>
         <member name="M:DDDWebAPI.Presentation.Controllers.ProdutosController.GetProdutoByNome(System.String)">
             <summary>
-            Busca uma produto pelo nome 
+            Busca um produto pelo nome 
             </summary>
             <param name="nome_produto">Nome do produto que será utilizado para a busca</param>
             <returns>Os produtos que foram encontrados com aquele nome </returns>
             <response code="200">Retorna os produtos encontrados</response>
-            <response code="204">Nenhuma produto foi encontrado</response>
+            <response code="204">Nenhum produto foi encontrado</response>
             <response code="400">Requisição mal formada,verifique a mensagem de erro</response>
             <response code="500">Erro interno</response>
         </member>
         <member name="M:DDDWebAPI.Presentation.Controllers.ProdutosController.GetProdutoById(System.Int32)">
             <summary>
-            Busca uma produto pelo nome 
+            Busca um produto pelo nome 
             </summary>
             <param name="id_produto">id do produto que será utilizado para a busca</param>
             <returns>Os produtos que foram encontrados com aquele nome </returns>
             <response code="200">Retorna os produtos encontrados</response>
-            <response code="204">Nenhuma produto foi encontrado</response>
+            <response code="204">Nenhum produto foi encontrado</response>
             <response code="400">Requisição mal formado,verifique a mensagem de erro</response>
             <response code="500">Erro interno</response>
         </member>
         <member name="M:DDDWebAPI.Presentation.Controllers.ProdutosController.Patch(DDDWebAPI.Application.DTO.DTO.ProdutoDTO)">
             <summary>
-            Atualiza uma produto pelo codigo de id
+            Atualiza um produto pelo codigo de id
             </summary>
             <param name="model">produto que será atualizada</param>
             <returns>Os produtos que foram encontrados com aquele nome </returns>
             <response code="200">Retorna que a produto foi alterada</response>
             <response code="400">Requisição mal formada</response>
-            <response code="404">Nenhuma produto foi encontrada</response>
+            <response code="404">Nenhum produto foi encontrada</response>
             <response code="500">Erro interno</response>
         </member>
         <member name="M:DDDWebAPI.Presentation.Controllers.ProdutosController.Delete(System.Int32)">
             <summary>
-            Remove uma produto pelo codigo de id
+            Remove um produto pelo codigo de id
             </summary>
             <param name="id">código de id da produto que será removida</param>
             <returns>Se foi deletado</returns>
             <response code="202">Ok</response>
-            <response code="204">Nenhuma produto foi encontrada</response>
+            <response code="204">Nenhum produto foi encontrada</response>
             <response code="400">Requisição mal formada</response>
             <response code="500">Erro interno</response>
         </member>

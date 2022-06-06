@@ -1,11 +1,22 @@
 <h2>
     <ul class="categorias">
         <li *ngFor="let categoria of categorias">
-            <button type="button" (click)="onSelect(categoria)" [class.selected]="categoria === selectedCategoria">
-                <span class="badge">{{categoria.id}}</span>
-                <span class="nome">{{categoria.nome}}</span>
-            </button>
+            <a routerLink="/categorias/{{categoria.id}}">
+                <span class="badge">{{categoria.id}}</span> {{categoria.nome}}
+
+            </a>
+            <!-- <button type="button" class="delete" title="delete categoria" (click)="delete(categoria)">x</button> -->
         </li>
     </ul>
 </h2>
-<app-detalhe-categoria [categoria]="selectedCategoria"></app-detalhe-categoria>
+<div>
+    <label for="new-categoria">Hero name: </label>
+    <input id="new-categoria" #categoriaName />
+
+    <!-- (click) passes input value to add() and then clears the input -->
+    <button type="button" class="add-button" (click)="add(categoriaName.value); categoriaName.value=''">
+        Add categoria
+    </button>
+</div>
+<!-- Colocar organização components e service dentro da pasta  -->
+<!-- pesuqisar sobre Clean Archtecture hexagonal  -->

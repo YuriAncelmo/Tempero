@@ -18,12 +18,24 @@ export class CategoriasComponent implements OnInit {
     this.getCategorias();
   }
 
-  onSelect(categoria: Categoria): void {
-    this.selectedCategoria = categoria;
-    this.messageService.add(`CategoriaComponent: categoria selecionada=${categoria.id}`);
-  }
+
   getCategorias(): void {
     this.categoriaService.getCategorias()
-      .subscribe(categorias => this.categorias = categorias);
+      .subscribe(categorias => {
+        this.messageService.add("Objeto" + categorias);
+        this.categorias = categorias;
+      });
+  }
+  add(nome: string): void {
+    nome = nome.trim();
+    if (!nome) { return; }
+    this.categoriaService.addCategoria({ nome } as Categoria)
+      .subscribe(categoria => {
+        this.categorias.push(categoria);
+      });
+  }
+  delete(categoria: Categoria): void {
+    this.categorias = this.categorias.filter(h => h !== categoria);
+    this.categoriaService.deleteCategoria(categoria.id).subscribe();
   }
 }

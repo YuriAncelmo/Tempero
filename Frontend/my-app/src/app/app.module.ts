@@ -9,12 +9,14 @@ import { DetalheCategoriaComponent } from './categorias/detalhe-categoria/detalh
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { MessagesComponent } from './messages/messages.component';
+import { DashboardCategoriaComponent } from './categorias/dashboard-categoria/dashboard-categoria.component';
 @NgModule({
   declarations: [
     AppComponent,
     CategoriasComponent,
     DetalheCategoriaComponent,
-    MessagesComponent
+    MessagesComponent,
+    DashboardCategoriaComponent
   ],
   imports: [
     BrowserModule,

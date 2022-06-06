@@ -160,7 +160,8 @@ namespace Teste_FeiraLivre
             ActionResult<IEnumerable<FeiraDTO>> result = controller.GetNomeFeira(null);
 
             // Assert
-            Assert.IsInstanceOfType(result.Result, typeof(BadRequestObjectResult));
+            Assert.IsInstanceOfType(result.Result, typeof(NoContentResult));
+            //TODO: ajustar
         }
         #endregion
 

@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Diagnostics;
 
 namespace DDDWebAPI.Presentation.Controllers
 {
-    [Route("categoria")]
+    [Route("api/categorias")]
     public class CategoriasController : Controller
     {
         private readonly ILogger<CategoriasController> _logger;
@@ -32,6 +32,7 @@ namespace DDDWebAPI.Presentation.Controllers
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CategoriaDTO))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status409Conflict)]
         [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult<CategoriaDTO> Post([FromBody] CategoriaDTO model)
@@ -42,14 +43,57 @@ namespace DDDWebAPI.Presentation.Controllers
                 return BadRequest("Categoria inválida");
             if (model.nome == null)
                 return UnprocessableEntity("É necessário ter um id para cadastrar");
+            
+            IEnumerable<CategoriaDTO> search = _applicationServiceCategoria.GetAllByNome(model.nome);
+            if (search.Count() > 0)
+                return Conflict("Categoria já existe");
 
             _logger.LogInformation("Tentando incluir uma categoria", model);
             _applicationServiceCategoria.Add(model);
-            return Ok(model);
+            
+            CategoriaDTO datamodel = _applicationServiceCategoria.GetAllByNome(model.nome).Last();
+            _logger.LogInformation("Categoria incluida ", datamodel);
+            return Ok(datamodel);
+
         }
         #endregion 
 
         #region Buscas
+        /// <summary>
+        /// Busca todas as categorias
+        /// </summary>
+        /// <returns>As categorias encontradas </returns>
+        /// <response code="200">Retorna as categorias encontradas</response>
+        /// <response code="204">Nenhuma categoria foi encontrada</response>
+        /// <response code="400">Requisição mal formada,verifique a mensagem de erro</response>
+        /// <response code="500">Erro interno</response>
+        [HttpGet]
+        [Route("")]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public ActionResult<IEnumerable<CategoriaDTO>> GetCategorias()
+        {
+            IEnumerable<CategoriaDTO> categorias;
+            _logger.LogInformation("Tentando buscar todas as categorias");
+
+            categorias= _applicationServiceCategoria.GetAll();
+
+
+            if (categorias == null)
+            {
+                _logger.LogInformation("Nada encontrado");
+
+                return NoContent();
+            }
+            else
+            {
+                _logger.LogInformation("Categorias retornadas " + categorias.Count());
+                return Ok(categorias);
+            }
+        }
         /// <summary>
         /// Busca uma categoria pelo nome 
         /// </summary>
@@ -167,6 +211,9 @@ namespace DDDWebAPI.Presentation.Controllers
         [Route("")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult Patch([FromBody] CategoriaDTO model)
         {
             if (model == null)

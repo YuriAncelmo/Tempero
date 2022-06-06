@@ -12,6 +12,8 @@ namespace DDDWebAPI.Presentation
 {
     public class Startup
     {
+        string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -22,7 +24,7 @@ namespace DDDWebAPI.Presentation
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            
+
             var host = Configuration["DBHOST"] ?? "localhost";
             var port = Configuration["DBPORT"] ?? "3306";
             var password = Configuration["MYSQL_PASSWORD"] ?? Configuration.GetConnectionString("MYSQL_PASSWORD");
@@ -67,6 +69,16 @@ namespace DDDWebAPI.Presentation
                         }
                     };
                 options.ClientErrorMapping[StatusCodes.Status404NotFound].Title = "Não encontrado";
+            });
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: MyAllowSpecificOrigins,
+                                  policy =>
+                                  {
+                                      policy.WithOrigins("http://localhost:4200")
+                                                    .AllowAnyHeader()
+                                                  .AllowAnyMethod();
+                                  });
             });
         }
 
@@ -120,6 +132,7 @@ namespace DDDWebAPI.Presentation
                 {
                     endpoints.MapControllers();
                 });
+                app.UseCors(MyAllowSpecificOrigins);
             }
             catch (Exception) { throw; }
         }

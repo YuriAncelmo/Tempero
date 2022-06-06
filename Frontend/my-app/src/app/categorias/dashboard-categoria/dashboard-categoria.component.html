@@ -1,0 +1,6 @@
+<h2>Top Heroes</h2>
+<div class="categorias-menu">
+    <a *ngFor="let categoria of categorias" routerLink="/categorias/{{categoria.id}}">
+        {{categoria.nome}}
+    </a>
+</div>

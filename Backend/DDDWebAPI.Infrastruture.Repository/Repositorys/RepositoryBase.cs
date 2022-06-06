@@ -7,21 +7,21 @@ namespace DDDWebAPI.Infrastruture.Repository.Repositorys
     public abstract class RepositoryBase<TEntity> : IDisposable, IRepositoryBase<TEntity> where TEntity : Domain.Models.Base
     {
         private readonly MySqlContext _context;
-        private DbSet<TEntity> entities;
+        private DbSet<TEntity> data;
         public RepositoryBase(MySqlContext Context)
         {
             _context = Context;
-            entities = _context.Set<TEntity>();
+            data = _context.Set<TEntity>();
         }
         string errorMessage = string.Empty;
         
         public IEnumerable<TEntity> GetAll()
         {
-            return entities.AsEnumerable();
+            return data.AsEnumerable();
         }
         public TEntity GetById(int id)
         {
-            return entities.SingleOrDefault(s => s.id == id);
+            return data.SingleOrDefault(s => s.id == id);
         }
         public void Add(TEntity entity)
         {
@@ -29,7 +29,7 @@ namespace DDDWebAPI.Infrastruture.Repository.Repositorys
             {
                 throw new ArgumentNullException("entity");
             }
-            entities.Add(entity);
+            data.Add(entity);
             _context.SaveChanges();
         }
         public virtual void Update(TEntity entity)
@@ -46,7 +46,8 @@ namespace DDDWebAPI.Infrastruture.Repository.Repositorys
             {
                 throw new ArgumentNullException("entity");
             }
-            entities.Remove(entity);
+
+            data.Remove(entity);
             _context.SaveChanges();
         }
         public virtual void Dispose()
