@@ -10,10 +10,19 @@ namespace DDDWebAPI.Infrastruture.CrossCutting.Adapter.Map
 
         #region properties
 
-        List<ProdutoDTO> produtosDTOs = new List<ProdutoDTO>();
+        List<ProdutoDTO> produtosDTOs;
+        List<Produto> produtos;
+        MapperMateriaPrima mapperMateriaPrima;
+
+
 
         #endregion
-
+        public MapperProduto()
+        {
+            produtos = new List<Produto>();
+            produtosDTOs = new List<ProdutoDTO>();
+            mapperMateriaPrima = new MapperMateriaPrima();
+        }
 
         #region methods
 
@@ -23,37 +32,44 @@ namespace DDDWebAPI.Infrastruture.CrossCutting.Adapter.Map
             {
                 id = produtoDTO.id,
                 nome = produtoDTO.nome,
-                categoriaid = produtoDTO.categoriaid
+                categoriaid = produtoDTO.categoriaid,
+                materiasprima = mapperMateriaPrima.MapperListMateriaPrimaEntity(produtoDTO.MateriaPrimas)
             };
             return produto;
         }
 
 
-        public IEnumerable<ProdutoDTO> MapperListProdutos(IEnumerable<Produto> produtos)
+        public IEnumerable<ProdutoDTO> MapperListProdutosDTO(IEnumerable<Produto> produtos)
         {
-            foreach (var produto in produtos)
+            foreach (Produto produto in produtos)
             {
-                ProdutoDTO produtoDTO = new ProdutoDTO
-                {
-                    id = produto.id,
-                    nome = produto.nome,
-                    categoriaid = produto.categoriaid
-                };
+                ProdutoDTO produtoDTO = MapperToDTO(produto);
                 produtosDTOs.Add(produtoDTO);
             }
 
             return produtosDTOs;
         }
+        public IEnumerable<Produto> MapperListProdutosEntity(IEnumerable<ProdutoDTO> produtos_dto)
+        {
+            foreach (ProdutoDTO produto_dto in produtos_dto)
+            {
+                Produto produto = MapperToEntity(produto_dto);
+                produtos.Add(produto);
+            }
 
+            return produtos;
+        }
         public ProdutoDTO MapperToDTO(Produto produto)
         {
             if (produto == null)
                 return null;
+
             ProdutoDTO produtoDTO = new ProdutoDTO
             {
                 id = produto.id,
                 nome = produto.nome,
-                categoriaid = produto.categoriaid
+                categoriaid = produto.categoriaid,
+                MateriaPrimas = mapperMateriaPrima.MapperListMateriaPrimaDTO(produto.materiasprima)
             };
 
             return produtoDTO;

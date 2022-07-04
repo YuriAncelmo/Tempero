@@ -9,7 +9,8 @@ namespace DDDWebAPI.Infrastruture.CrossCutting.Adapter.Interfaces
 
         Produto MapperToEntity(ProdutoDTO clienteDTO);
 
-        IEnumerable<ProdutoDTO> MapperListProdutos(IEnumerable<Produto> clientes);
+        IEnumerable<Produto> MapperListProdutosEntity(IEnumerable<ProdutoDTO> clientes);
+        IEnumerable<ProdutoDTO> MapperListProdutosDTO(IEnumerable<Produto> clientes);
 
         ProdutoDTO MapperToDTO(Produto Cliente);
 
